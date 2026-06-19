@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cheese in the Trap: Who is your GOAT?</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header>
+    <img src="images/header.jpg" alt="Cheese in the Trap: Who is your GOAT?" class="header-banner">
+  </header>
+
+  <main id="app">
+
+    <section id="intro" class="screen">
+      <p class="blurb">
+        32 characters. 5 rounds. Only one GOAT.<br>
+        Who is your one true GOAT in the Cheese in the Trap Buddy Read? 
+      </p>
+      <button id="startBtn" class="btn">Start the Tournament</button>
+    </section>
+
+    <section id="matchup" class="screen hidden">
+      <div class="round-label" id="roundLabel"></div>
+      <div class="versus">
+        <button class="card" id="cardA">
+          <img id="imgA" src="" alt="">
+          <div class="name" id="nameA"></div>
+        </button>
+        <div class="vs">VS</div>
+        <button class="card" id="cardB">
+          <img id="imgB" src="" alt="">
+          <div class="name" id="nameB"></div>
+        </button>
+      </div>
+      <div class="progress">
+        <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+        <div class="progress-text" id="progressText"></div>
+      </div>
+    </section>
+
+    <section id="result" class="screen hidden">
+      <h2>👑 Your GOAT is...</h2>
+      <div class="champion" id="championBox"></div>
+      <canvas id="bracketCanvas"></canvas>
+      <div class="actions">
+        <button id="downloadBtn" class="btn">Download Bracket Image</button>
+        <button id="restartBtn" class="btn secondary">Run It Again</button>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>Made for fun by fans of Cheese in the Trap 🧀</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
