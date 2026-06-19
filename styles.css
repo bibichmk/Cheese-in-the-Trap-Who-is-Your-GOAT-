@@ -23,6 +23,10 @@ body {
 header {
   text-align: center;
   padding: 28px 16px 10px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 h1 {
