@@ -20,19 +20,24 @@ body {
   flex-direction: column;
 }
 
+/* --- UPDATED HEADER CONTAINER --- */
 header {
-  text-align: center;
-  padding: 28px 16px 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: clamp(14px, 4vw, 28px) 16px 10px; /* Scales padding fluidly based on viewport width */
   width: 100%;
   overflow: hidden;
 }
 
+/* --- UPDATED DYNAMIC HEADER BANNER --- */
 .header-banner {
   width: 100%;
-  max-width: 100%;
+  max-width: 900px; /* Constrains it to perfectly align with your .screen elements */
   height: auto;
   display: block;
   object-fit: contain;
+  border-radius: 12px; /* Optional: adds a subtle roundness to match your UI cards */
 }
 
 h1 {
