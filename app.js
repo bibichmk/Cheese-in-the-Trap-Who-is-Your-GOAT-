@@ -1,8 +1,4 @@
-/* ====================== CHARACTER ROSTER ======================
-   Put your 32 image files inside the /images folder using these
-   exact filenames. Edit the "name" field if you want different
-   display text - it does NOT need to match the filename.
-================================================================== */
+/* ====================== CHARACTER ROSTER ======================*/
 const CHARACTERS = [
   { name: "Snail",             file: "Snail.png" },
   { name: "Mona",               file: "Mona.png" },
@@ -46,6 +42,7 @@ let currentRoundIdx = 0;
 let currentMatchIdx = 0;
 let totalMatches = 0;
 let matchesDone = 0;
+const globalImageCache = {}; // Global cache to keep all roster images alive in memory
 
 /* ====================== DOM ====================== */
 const introScreen = document.getElementById("intro");
@@ -83,6 +80,18 @@ function imgPath(char) {
   return IMAGE_DIR + char.file;
 }
 
+// Preloads all 32 character images into memory immediately on boot
+function preloadRosterImages() {
+  CHARACTERS.forEach((char) => {
+    const path = imgPath(char);
+    if (!globalImageCache[char.file]) {
+      const img = new Image();
+      img.src = path;
+      globalImageCache[char.file] = img;
+    }
+  });
+}
+
 /* ====================== TOURNAMENT ENGINE ====================== */
 function startTournament() {
   rounds = [];
@@ -93,7 +102,7 @@ function startTournament() {
   }
   rounds.push(firstRound);
 
-  totalMatches = CHARACTERS.length - 1; // total matches in a single-elim bracket
+  totalMatches = CHARACTERS.length - 1; 
   matchesDone = 0;
   currentRoundIdx = 0;
   currentMatchIdx = 0;
@@ -131,7 +140,6 @@ function pickWinner(winner) {
   currentMatchIdx++;
 
   if (currentMatchIdx >= round.length) {
-    // round finished, build next round
     const winners = round.map(m => m.winner);
     if (winners.length === 1) {
       finishTournament(winners[0]);
@@ -176,7 +184,7 @@ function loadImage(src) {
     img.onload = () => resolve(img);
     img.onerror = () => {
       console.warn("Bracket image failed to load:", src);
-      resolve(null); // fallback gracefully if missing
+      resolve(null); 
     };
     img.src = src;
   });
@@ -185,7 +193,6 @@ function loadImage(src) {
 async function renderBracketImage(champion) {
   const ctx = canvas.getContext("2d");
 
-  // 1. HIGH-RESOLUTION BRACKET SIZE CONFIGURATION
   const numRounds = rounds.length; 
   const colWidth = 280;   
   const rowHeight = 70;   
@@ -200,18 +207,16 @@ async function renderBracketImage(champion) {
   canvas.width = width;
   canvas.height = height;
 
-  // Draw solid dark background
   ctx.fillStyle = "#15151a";
   ctx.fillRect(0, 0, width, height);
 
-  // 2. CLEAN TEXT TITLE (Replaced the annoying image banner layout)
   ctx.fillStyle = "#f2b134";
   ctx.font = "bold 38px Arial";
   ctx.textAlign = "center";
-  ctx.fillText("🧀 Cheese in the Trap: Who is your GOAT? 🧀", width / 2, padding + 35);
+  ctx.fillText("👑 Cheese in the Trap: Who is your GOAT? 👑", width / 2, padding + 35);
 
-  // Preload all character images used
-  const cache = {};
+  // Uses the already active cache if available, or fallbacks smoothly
+  const cache = { ...globalImageCache };
   for (const round of rounds) {
     for (const m of round) {
       for (const p of [m.p1, m.p2]) {
@@ -222,7 +227,6 @@ async function renderBracketImage(champion) {
     }
   }
 
-  // Compute y positions for structural entries
   const topY = padding + titleHeight;
   let prevCenters = [];
 
@@ -237,7 +241,6 @@ async function renderBracketImage(champion) {
       const m = round[i];
       const blockTop = topY + i * blockHeight;
       
-      // Math optimization (0.25 & 0.75) ensuring node connectors line up perfectly
       const y1 = blockTop + blockHeight * 0.25;
       const y2 = blockTop + blockHeight * 0.75;
       const centerY = (y1 + y2) / 2;
@@ -246,7 +249,6 @@ async function renderBracketImage(champion) {
       drawEntrant(ctx, m.p1, x, y1, m.winner === m.p1, cache, thumb);
       drawEntrant(ctx, m.p2, x, y2, m.winner === m.p2, cache, thumb);
 
-      // Thicker connector tree branches
       ctx.strokeStyle = "#555560";
       ctx.lineWidth = 3; 
       ctx.beginPath();
@@ -263,7 +265,6 @@ async function renderBracketImage(champion) {
     prevCenters = centers;
   }
 
-  // 3. CHAMPION BOX AND TYPOGRAPHY DRAWING
   const champX = padding + numRounds * colWidth;
   const champY = topY + (height - topY - padding) / 2 - 90;
 
@@ -337,3 +338,6 @@ downloadBtn.addEventListener("click", () => {
   link.href = canvas.toDataURL("image/png");
   link.click();
 });
+
+// Kick off preloading instantly when the script initializes
+preloadRosterImages();
