@@ -20,24 +20,22 @@ body {
   flex-direction: column;
 }
 
-/* --- UPDATED HEADER CONTAINER --- */
 header {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: clamp(14px, 4vw, 28px) 16px 10px; /* Scales padding fluidly based on viewport width */
+  padding: clamp(14px, 4vw, 28px) 16px 10px;
   width: 100%;
   overflow: hidden;
 }
 
-/* --- UPDATED DYNAMIC HEADER BANNER --- */
 .header-banner {
   width: 100%;
-  max-width: 900px; /* Constrains it to perfectly align with your .screen elements */
+  max-width: 900px;
   height: auto;
   display: block;
   object-fit: contain;
-  border-radius: 12px; /* Optional: adds a subtle roundness to match your UI cards */
+  border-radius: 12px;
 }
 
 h1 {
@@ -129,6 +127,7 @@ main#app {
   cursor: pointer;
   transition: border-color 0.15s ease, transform 0.15s ease;
   color: var(--text);
+  touch-action: manipulation;
 }
 .card:hover {
   border-color: var(--accent);
@@ -208,6 +207,19 @@ footer {
   font-size: 0.8rem;
 }
 
+/* --- FIXED MOBILE ALIGNMENT --- */
 @media (max-width: 540px) {
-  .card { width: 42vw; }
+  .versus {
+    flex-direction: column; /* Stacks cards cleanly on top of each other */
+    gap: 12px;             /* Tightens up layout spacing */
+  }
+  
+  .card { 
+    width: 260px;          /* Sets a neat, unified width for mobile viewports */
+    max-width: 85vw;       /* Prevents clips on ultra-narrow screens */
+  }
+
+  .vs {
+    margin: 4px 0;         /* Centers the "VS" perfectly between stacked cards */
+  }
 }
