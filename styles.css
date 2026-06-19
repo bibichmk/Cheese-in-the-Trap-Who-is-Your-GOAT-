@@ -104,18 +104,21 @@ main#app {
   font-size: 0.9rem;
 }
 
+/* --- UPDATED VERSUS CONTAINER --- */
 .versus {
   display: flex;
-  align-items: center;
+  flex-direction: column; /* Force vertical stacking by default on mobile devices */
+  align-items: center;    /* Keeps everything perfectly centered horizontally */
   justify-content: center;
-  gap: 24px;
-  flex-wrap: wrap;
+  gap: 16px;
+  width: 100%;
 }
 
 .vs {
   font-weight: 800;
   font-size: 1.4rem;
   color: var(--muted);
+  margin: 4px 0;
 }
 
 .card {
@@ -123,7 +126,8 @@ main#app {
   border: 3px solid transparent;
   border-radius: 16px;
   padding: 14px;
-  width: 240px;
+  width: 260px; /* Perfectly sized standard card width for mobile viewports */
+  max-width: 85vw;
   cursor: pointer;
   transition: border-color 0.15s ease, transform 0.15s ease;
   color: var(--text);
@@ -207,19 +211,13 @@ footer {
   font-size: 0.8rem;
 }
 
-/* --- FIXED MOBILE ALIGNMENT --- */
-@media (max-width: 540px) {
+/* --- DESKTOP VIEWPORTS LAYOUT OVERRIDE --- */
+@media (min-width: 680px) {
   .versus {
-    flex-direction: column; /* Stacks cards cleanly on top of each other */
-    gap: 12px;             /* Tightens up layout spacing */
+    flex-direction: row; /* Returns layout side-by-side smoothly on wide screens */
+    gap: 32px;
   }
-  
-  .card { 
-    width: 260px;          /* Sets a neat, unified width for mobile viewports */
-    max-width: 85vw;       /* Prevents clips on ultra-narrow screens */
-  }
-
-  .vs {
-    margin: 4px 0;         /* Centers the "VS" perfectly between stacked cards */
+  .card {
+    width: 240px;
   }
 }
