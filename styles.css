@@ -60,6 +60,14 @@ main#app {
   gap: 22px;
 }
 
+.header-banner {
+  width: 100%;
+  max-width: 900px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
 .hidden { display: none !important; }
 
 .blurb {
