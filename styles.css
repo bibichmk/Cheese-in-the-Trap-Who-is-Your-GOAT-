@@ -24,9 +24,15 @@ header {
   text-align: center;
   padding: 28px 16px 10px;
   width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  overflow: hidden;
+}
+
+.header-banner {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
 }
 
 h1 {
@@ -58,14 +64,6 @@ main#app {
   align-items: center;
   text-align: center;
   gap: 22px;
-}
-
-.header-banner {
-  width: 100%;
-  max-width: 900px;
-  height: auto;
-  display: block;
-  margin: 0 auto;
 }
 
 .hidden { display: none !important; }
